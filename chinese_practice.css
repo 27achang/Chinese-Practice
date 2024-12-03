@@ -10,8 +10,7 @@ h1{
 
 #week_selection_div,#quiz_div{
     margin: auto;
-    width: 60%;
-    min-width: 500px;
+    width: max(60%, min(100%, 500px));
     background-color: var(--irish-green);
     color: white;
     overflow: hidden;
@@ -68,6 +67,7 @@ h2{
 
 #quiz_info_div{
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
