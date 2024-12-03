@@ -58,12 +58,18 @@ h2{
     cursor: pointer;
 }
 
-#question_number{
+#week_display{
     margin-top: 0px;
     float: right;
     margin-right: 2.5%;
     font-weight: bold;
     font-size: 1.2em;
+}
+
+#quiz_info_div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 h4{

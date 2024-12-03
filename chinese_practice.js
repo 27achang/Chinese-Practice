@@ -41,6 +41,7 @@ var week_selector = document.getElementById("week_selector");
 var generate_list = document.getElementById("generate_list");
 
 var quiz_div = document.getElementById("quiz_div");
+var week_display = document.getElementById("week_display");
 var question_number_display = document.getElementById("question_number");
 var vocab_id_display = document.getElementById("vocab_index");
 var accuracy_display = document.getElementById("accuracy_label");
@@ -75,14 +76,14 @@ function makeList(){
             random = Math.floor(Math.random() * word_list.length);
         }while(order.includes(random));
         order.push(random);
-        console.log("Adding " + random);
     }
     
-    
-    question_number_display.innerHTML = "#1";
-    vocab_id_display.innerHTML = ("Phrase/Vocabulary Index: " + (order[0]+1));
+    week_display.innerHTML = week_selector.options[selected_index].value.split(" — ")[0];
+    question_number_display.innerHTML = "Question #1";
+    vocab_id_display.innerHTML = ("Word #" + (order[0]+1));
     accuracy_display.style.display = "none";
     marking_div.style.display = "none";
+    add_to_review_button.style.display = "none";
 
     question_number = 0;
     correct_questions = 0;
@@ -111,53 +112,53 @@ function playWord(){
     if(window.speechSynthesis.speaking){
         console.error("speechSynthesis.speaking");
     }else{
-        var word = word_list[order[question_number]];
+        var word = word_list[order[question_number]].chinese;
         var msg = new SpeechSynthesisUtterance(word);
-        marking_div.querySelectorAll("button").forEach((marking_button) => marking_button.removeAttribute("disabled"));
-        marking_div.style.visibility = "visible";
         msg.lang = "zh-CN";
         msg.rate = 0.6;
         msg.pitch = 0.98;
         window.speechSynthesis.speak(selectMandarinVoice(msg));
+        
+        marking_div.style.display = "block";
     }
 }
 
 function nextWord(){
-    if(question_number < (order.length-1)){
+    if(question_number < (order.length - 1)){
         question_number += 1;
         asked += 1;
-        question_number_display.innerHTML = ("#" + (question_number + 1));
-        vocab_id_display.innerHTML = ("Phrase/Vocabulary Index: " + (order[question_number]+1));
-        add_to_review_button.disabled = false;
+        question_number_display.innerHTML = ("Question #" + (question_number + 1));
+        vocab_id_display.innerHTML = ("Word #" + (order[question_number]+1));
+
+        marking_div.querySelectorAll("button").forEach((marking_button) => marking_button.disabled = false);
         added_to_review = false;
-        marking_div.style.visibility = "hidden";
-        review_div.style.display = "none";
+        marking_div.style.display = "none";
+        add_to_review_button.style.display = "none";
     }else{
         alert("You've reached the end of the list!");
     }
 }
 
 function grade(correct){
-    if(question_number == 1) accuracy_display.style.display = "block";
-    marking_div.querySelectorAll("button").forEach((marking_button) => marking_button.disabled);
+    if(question_number == 0) accuracy_display.style.display = "block";
+    marking_div.querySelectorAll("button:nth-child(-n + 2)").forEach((marking_button) => marking_button.disabled = true);
     if(correct){
-        review_div.style.display = "inline-block";
+        add_to_review_button.style.display = "inline-block";
         correct_questions += 1;
-    }else{
-        if (order[order.length] !== order[quesiton_number]) order.push(order[question_number]);
-    }
+    }/*else{
+        if (order[order.length] !== order[question_number]) order.push(order[question_number]);
+    }*/
     var accuracy = Math.round(correct_questions/asked*100*100)/100;
-    var rounded = accuracy !== correct_questions/asked*100;
-    rounded ? accuracy = "\u2248" + accuracy : console.log();
+    if(accuracy !== correct_questions/asked*100) accuracy = "~" + accuracy;
     console.log("Marked " + (correct ? "Correct" : "Incorrect") + "; Total Correct: " + correct_questions + "; Total Asked: " + asked + "; Accuracy: " + accuracy + "%");
-    accuracy_display.innerHTML = ("Accuracy: " + accuracy + "%");
+    accuracy_display.innerHTML = (accuracy + "% Accuracy");
 }
 
 function addReview(){
     if(!added_to_review){
         added_to_review = true;
         add_to_review_button.disabled = true;
-        if (order[order.length] !== order[question_number]) order.push(order[question_number]);
+        //if (order[order.length] !== order[question_number]) order.push(order[question_number]);
     }else{
         alert("You have already added this question to the review.")
     }
