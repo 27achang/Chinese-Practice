@@ -1,0 +1,82 @@
+body{
+    --irish-green: #005035;
+    --shamrock-green: #6BA53A;
+}
+
+h1{
+    margin: 1% auto;
+    color: var(--irish-green);
+}
+
+#week_selection_div,#quiz_div{
+    margin: auto;
+    width: 60%;
+    min-width: 500px;
+    background-color: var(--irish-green);
+    color: white;
+    overflow: hidden;
+    border-radius: 15px;
+    padding: 25px 0px;
+    transition: height 0.2s;
+}
+
+h2{
+    font-size: 1.75em;
+}
+
+#week_selection_div h2{
+    margin-top: 0px;
+}
+
+#week_selector{
+    width: 95%;
+    max-width: fit-content;
+}
+
+#generate_list{
+    display: none;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: var(--shamrock-green);
+    color: white;
+}
+
+#quiz_div,#add_to_review_button{
+    display: none;
+}
+
+#select_new_list{
+    margin-top: 0px;
+    float: left;
+    margin-left: 2.5%;
+    line-height: 1.2em;
+}
+
+#select_new_list:hover{
+    cursor: pointer;
+}
+
+#question_number{
+    margin-top: 0px;
+    float: right;
+    margin-right: 2.5%;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+h4{
+    font-size: 1.5em;
+}
+
+@media (min-width: 600px){
+    body{
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    #week_selector, button{
+        font-size: 1.2em;
+    }
+}
