@@ -145,9 +145,9 @@ function grade(correct){
     if(correct){
         add_to_review_button.style.display = "inline-block";
         correct_questions += 1;
-    }/*else{
-        if (order[order.length] !== order[question_number]) order.push(order[question_number]);
-    }*/
+    }else{
+        /*if (order[order.length] !== order[question_number]) */order.push(order[question_number]);
+    }
     var accuracy = Math.round(correct_questions/asked*100*100)/100;
     if(accuracy !== correct_questions/asked*100) accuracy = "~" + accuracy;
     console.log("Marked " + (correct ? "Correct" : "Incorrect") + "; Total Correct: " + correct_questions + "; Total Asked: " + asked + "; Accuracy: " + accuracy + "%");
@@ -158,7 +158,7 @@ function addReview(){
     if(!added_to_review){
         added_to_review = true;
         add_to_review_button.disabled = true;
-        //if (order[order.length] !== order[question_number]) order.push(order[question_number]);
+        /*if (order[order.length] !== order[question_number]) */order.push(order[question_number]);
     }else{
         alert("You have already added this question to the review.")
     }
